@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="mapboxWhite">#FFFFFF</color>
+    <color name="mapboxBlue">#4264fb</color>
+    <color name="mapboxGrayLight">#c6d2e1</color>
+
+    <color name="mapbox_offline_navy">#263d57</color>
+    <color name="mapbox_offline_light_navy">#949fac</color>
+    <color name="mapbox_offline_bright_blue">#4a90e2</color>
+    <color name="mapbox_offline_green">#58BA93</color>
+    <color name="mapbox_offline_material_grey_200">#EEEEEE</color>
+    <color name="mapbox_offline_white">#FFFFFF</color>
+
+    <color name="mapbox_offline_dim_scrim">#44000000</color>
+</resources>

@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">OfflineApiDemo</string>
+    <string name="access_token">pk.eyJ1Ijoic2h1YmhhbTMxMTAiLCJhIjoiY2ttb29wYzllMTF6bDJ2bXp1N3Q5NmR4NiJ9.NNrqRBCrqGPIBZbZw7NL2g</string>
+
+    <!-- Offline region selector UI-->
+    <string name="mapbox_offline_default_region_name">Map </string>
+
+    <string name="mapbox_offline_toolbar_primary_text">Select a region</string>
+    <string name="mapbox_offline_toolbar_secondary_text">Pan and zoom to adjust</string>
+
+    <!-- Notification strings -->
+    <string name="mapbox_offline_notification_default_content_title">Offline download</string>
+    <string name="mapbox_offline_notification_default_content_text">Downloading..</string>
+    <string name="mapbox_offline_notification_action_cancel">Cancel</string>
+
+    <!-- Accessibility -->
+    <string name="mapbox_offline_cd_exit_offline">Exit place picker</string>
+    <string name="simple_offline_end_progress_success">Success</string>
+    <string name="basic_offline_deleted_toast">Deleted</string>
+    <string name="list_button_text">List</string>
+    <string name="download_button_text">Download</string>
+    <string name="region_name">Regió %1$d</string>
+    <string name="navigate_negative_button_title">Cancel</string>
+    <string name="toast_region_deleted">Deleted</string>
+    <string name="navigate_neutral_button_title">Delete</string>
+    <string name="navigate_positive_button">Navigate to</string>
+    <string name="navigate_title">List</string>
+    <string name="toast_no_regions_yet">You have no regions yet.</string>
+    <string name="end_progress_success">Region downloaded successfully.</string>
+    <string name="dialog_negative_button">Cancel</string>
+    <string name="dialog_toast">Region name cannot be empty.</string>
+    <string name="dialog_positive_button">Download</string>
+    <string name="set_region_name_hint">Enter name</string>
+    <string name="dialog_title">dialog_title</string>
+    <string name="dialog_message">Looks like something went wrong with the log in process! Please try clearing your browser\'s cache/cookies and then sign back in.</string>
+</resources>
