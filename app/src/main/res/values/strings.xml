@@ -33,4 +33,7 @@
     <string name="set_region_name_hint">Enter name</string>
     <string name="dialog_title">dialog_title</string>
     <string name="dialog_message">Looks like something went wrong with the log in process! Please try clearing your browser\'s cache/cookies and then sign back in.</string>
+    <string name="user_location_permission_explanation">Permission Explanation</string>
+    <string name="user_location_permission_not_granted">Permission Not Granted</string>
+    <string name="directions_activity_toast_message">Direction</string>
 </resources>

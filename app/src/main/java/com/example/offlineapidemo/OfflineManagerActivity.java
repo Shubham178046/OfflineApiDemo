@@ -13,10 +13,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.mapbox.android.core.permissions.PermissionsListener;
+import com.mapbox.android.core.permissions.PermissionsManager;
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
 import com.mapbox.mapboxsdk.geometry.LatLngBounds;
+import com.mapbox.mapboxsdk.location.LocationComponent;
+import com.mapbox.mapboxsdk.location.LocationComponentActivationOptions;
+import com.mapbox.mapboxsdk.location.modes.CameraMode;
+import com.mapbox.mapboxsdk.location.modes.RenderMode;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
@@ -30,10 +36,11 @@ import com.mapbox.mapboxsdk.offline.OfflineTilePyramidRegionDefinition;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import timber.log.Timber;
 
-public class OfflineManagerActivity extends AppCompatActivity {
+public class OfflineManagerActivity extends AppCompatActivity implements OnMapReadyCallback, PermissionsListener {
     private static final String TAG = "OffManActivity";
 
     // JSON encoding/decoding
@@ -41,6 +48,7 @@ public class OfflineManagerActivity extends AppCompatActivity {
     public static final String JSON_FIELD_REGION_NAME = "FIELD_REGION_NAME";
 
     // UI elements
+    private PermissionsManager permissionsManager;
     private MapView mapView;
     private MapboxMap map;
     private ProgressBar progressBar;
@@ -61,44 +69,37 @@ public class OfflineManagerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_offline_manager);
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
-        mapView.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(@NonNull MapboxMap mapboxMap) {
-                map = mapboxMap;
-                mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
-                    @Override
-                    public void onStyleLoaded(@NonNull Style style) {
-
-                        // Assign progressBar for later use
-                        progressBar = findViewById(R.id.progress_bar);
-
-                        // Set up the offlineManager
-                        offlineManager = OfflineManager.getInstance(OfflineManagerActivity.this);
-
-                        // Bottom navigation bar button clicks are handled here.
-                        // Download offline button
-                        downloadButton = findViewById(R.id.download_button);
-                        downloadButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                downloadRegionDialog();
-                            }
-                        });
-
-                        // List offline regions
-                        listButton = findViewById(R.id.list_button);
-                        listButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                downloadedRegionList();
-                            }
-                        });
-                    }
-                });
-            }
-        });
+        mapView.getMapAsync(this);
     }
+    @SuppressWarnings( {"MissingPermission"})
+    private void enableLocationComponent(@NonNull Style loadedMapStyle) {
+// Check if permissions are enabled and if not request
+        if (PermissionsManager.areLocationPermissionsGranted(this)) {
 
+// Get an instance of the component
+            LocationComponent locationComponent = map.getLocationComponent();
+
+// Activate with options
+            locationComponent.activateLocationComponent(
+                    LocationComponentActivationOptions.builder(this, loadedMapStyle).build());
+
+// Enable to make component visible
+            locationComponent.setLocationComponentEnabled(true);
+
+// Set the component's camera mode
+            locationComponent.setCameraMode(CameraMode.TRACKING);
+
+// Set the component's render mode
+            locationComponent.setRenderMode(RenderMode.COMPASS);
+        } else {
+            permissionsManager = new PermissionsManager(this);
+            permissionsManager.requestLocationPermissions(this);
+        }
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        permissionsManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
     @Override
     public void onResume() {
         super.onResume();
@@ -429,5 +430,60 @@ public class OfflineManagerActivity extends AppCompatActivity {
 
         // Show a toast
         Toast.makeText(OfflineManagerActivity.this, message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onExplanationNeeded(List<String> permissionsToExplain) {
+        Toast.makeText(this, R.string.user_location_permission_explanation, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onPermissionResult(boolean granted) {
+        if (granted) {
+            map.getStyle(new Style.OnStyleLoaded() {
+                @Override
+                public void onStyleLoaded(@NonNull Style style) {
+                    enableLocationComponent(style);
+                }
+            });
+        } else {
+            Toast.makeText(this, R.string.user_location_permission_not_granted, Toast.LENGTH_LONG).show();
+            finish();
+        }
+    }
+    @Override
+    public void onMapReady(@NonNull MapboxMap mapboxMap) {
+        map = mapboxMap;
+        mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
+            @Override
+            public void onStyleLoaded(@NonNull Style style) {
+                enableLocationComponent(style);
+                // Assign progressBar for later use
+                progressBar = findViewById(R.id.progress_bar);
+
+                // Set up the offlineManager
+                offlineManager = OfflineManager.getInstance(OfflineManagerActivity.this);
+
+                // Bottom navigation bar button clicks are handled here.
+                // Download offline button
+                downloadButton = findViewById(R.id.download_button);
+                downloadButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        downloadRegionDialog();
+                    }
+                });
+
+                // List offline regions
+                listButton = findViewById(R.id.list_button);
+                listButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        downloadedRegionList();
+                    }
+                });
+
+            }
+        });
     }
 }

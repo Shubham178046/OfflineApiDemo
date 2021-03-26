@@ -11,7 +11,7 @@ class OfflineMap : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_offline_map)
         findViewById<Button>(R.id.button).setOnClickListener {
-            val intent = Intent(this, OfflineMap::class.java)
+            val intent = Intent(this, Map::class.java)
             startActivity(intent)
         }
         findViewById<Button>(R.id.button2).setOnClickListener {
