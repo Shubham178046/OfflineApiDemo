@@ -36,4 +36,6 @@
     <string name="user_location_permission_explanation">Permission Explanation</string>
     <string name="user_location_permission_not_granted">Permission Not Granted</string>
     <string name="directions_activity_toast_message">Direction</string>
+    <string name="max_zoom_textview">Max zoom: %1$d</string>
+    <string name="min_zoom_textview">Min zoom: %1$d</string>
 </resources>
