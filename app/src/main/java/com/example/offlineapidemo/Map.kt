@@ -44,9 +44,8 @@ import com.mapbox.mapboxsdk.style.layers.PropertyFactory.*
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
 import com.mapbox.mapboxsdk.utils.BitmapUtils
-import com.mapbox.services.android.navigation.ui.v5.NavigationLauncher
-import com.mapbox.services.android.navigation.ui.v5.NavigationLauncherOptions
-import com.mapbox.services.android.navigation.ui.v5.route.NavigationMapRoute
+import com.mapbox.navigation.ui.route.NavigationMapRoute
+
 import com.mapbox.services.android.navigation.v5.navigation.NavigationRoute
 import kotlinx.android.synthetic.main.activity_map.*
 import org.json.JSONObject
@@ -222,7 +221,7 @@ class Map : AppCompatActivity(), PermissionsListener {
                         map.addMarker(options);
                         map.addMarker(options1);
                         getRoute(originPosition!!, dstPosition!!)
-                        startButton.setOnClickListener {
+                        /*startButton.setOnClickListener {
                             val navigationLauncherOptions = NavigationLauncherOptions.builder() //1
                                 .directionsRoute(currentRoute) //2
                                 .shouldSimulateRoute(true) //3
@@ -232,7 +231,7 @@ class Map : AppCompatActivity(), PermissionsListener {
                                 this@Map,
                                 navigationLauncherOptions
                             ) //4
-                        }
+                        }*/
                     }
                 })
             }
@@ -265,8 +264,7 @@ class Map : AppCompatActivity(), PermissionsListener {
                     if (navigationMapRoute != null) {
                         navigationMapRoute?.updateRouteVisibilityTo(false)
                     } else {
-                        navigationMapRoute =
-                            NavigationMapRoute(null, mapView, map, R.style.NavigationMapRoute)
+                        //navigationMapRoute = NavigationMapRoute(null, mapView, map, R.style.NavigationMapRoute)
                     }
 
                     currentRoute = response.body()?.routes()?.first()

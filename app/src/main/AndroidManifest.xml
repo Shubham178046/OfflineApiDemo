@@ -14,7 +14,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OfflineApiDemo">
-        <activity android:name=".offline.OfflineUiComponentsActivity"></activity>
+        <activity android:name=".BasicNavSdkOnlyActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".offline.OfflineUiComponentsActivity" />
         <activity android:name=".offline.OfflineRegionListActivity" />
         <activity android:name=".offline.OfflineRegionDetailActivity" />
         <activity android:name=".offline.OfflineDownloadActivity" />
@@ -22,7 +29,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity android:name=".Map">
@@ -36,12 +43,6 @@
             -->
         </activity>
         <activity android:name=".OfflineManagerActivity" />
-        <service
-            android:name="com.example.liboffline.offline.OfflineDownloadService"
-            android:exported="false"/>
-
-        <receiver android:name="com.example.liboffline.offline.OfflineDownloadStateReceiver">
-        </receiver>
     </application>
 
 </manifest>

@@ -38,4 +38,8 @@
     <string name="directions_activity_toast_message">Direction</string>
     <string name="max_zoom_textview">Max zoom: %1$d</string>
     <string name="min_zoom_textview">Min zoom: %1$d</string>
+    <string name="msg_long_press_map_to_place_waypoint">LongPresss</string>
+    <string name="steps_in_route">Steps</string>
+    <string name="no_routes">No Route</string>
+    <string name="route_request_failed">Route Request Failed</string>
 </resources>
